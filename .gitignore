@@ -1,0 +1,29 @@
+# Файлы Docker
+.dockerignore
+docker-compose.override.yml
+
+# Кэш и временные файлы
+*.log
+*.lock
+.cache/
+.temp/
+
+# Зависимости
+vendor/
+node_modules/
+
+# Конфигурации (если есть чувствительные данные)
+.env
+.env.local
+config/database.php
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+
+# Исключаем данные Docker
+mysql_data/
