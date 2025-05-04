@@ -14,21 +14,36 @@ class User {
     }
 
     // Добавить пользователя
-    public function addUser($name, $email, $password) { 
+    public function addUser($name, $email, $password, $role = 'user') { 
         try {
             $stmt = $this->pdo->prepare("
-                INSERT INTO users (name, email, password) 
-                VALUES (:name, :email, :password)
+                INSERT INTO users (name, email, password, role) 
+                VALUES (:name, :email, :password, :role)
             ");
             return $stmt->execute([
                 'name' => $name,
                 'email' => $email,
-                'password' => $password
+                'password' => $password,
+                'role' => $role
             ]);
         } catch (PDOException $e) {
             error_log("Ошибка добавления пользователя: " . $e->getMessage());
             return false;
         }
+    }
+
+    // Обновить пользователя
+    public function updateUser($id, $data) {
+        $stmt = $this->pdo->prepare("
+            UPDATE users SET name = :name, email = :email, password = :password, role = :role WHERE id = :id
+        ");
+        return $stmt->execute([
+            'id' => $id,
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => $data['password'],
+            'role' => $data['role']
+        ]);
     }
 
     // Удалить пользователя

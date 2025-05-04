@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'user') NOT NULL DEFAULT 'user'
 );
 
 -- Остальные таблицы (products, orders и т.д.)
@@ -42,4 +43,12 @@ CREATE TABLE blacklist (
     user_id INT NOT NULL,
     reason TEXT,
     FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- Создание администратора (пароль: admin123, без хеша)
+INSERT INTO users (name, email, password, role) VALUES (
+    'admin',
+    'admin@example.com',
+    'admin123',
+    'admin'
 );
